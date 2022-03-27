@@ -1,6 +1,9 @@
 package com.renting_boat.demo.controller;
 
 import com.renting_boat.demo.dto.BoatDTO;
+import com.renting_boat.demo.dto.BoatWithUserDTO;
+import com.renting_boat.demo.dto.RentingBoatDTO;
+import com.renting_boat.demo.dto.UserDTO;
 import com.renting_boat.demo.entity.Boat;
 import com.renting_boat.demo.entity.Role;
 import com.renting_boat.demo.exception.CustomSqlException;
@@ -12,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 
@@ -48,6 +52,21 @@ public class BoatController {
         boatService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @PostMapping(value = "boat/renting")
+    public ResponseEntity<Void> rentingBoat(@RequestBody RentingBoatDTO rentingBoatDTO) //throws CustomSqlException
+    {
+        //boatService.rentingBoat(rentingBoatDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "admin/boat/rented")
+    public ResponseEntity<List<Boat>> rentedBoat()
+    {
+        List<Boat> BoatWithUser = boatService.rentedBoat();
+        return new ResponseEntity<>(BoatWithUser, HttpStatus.OK);
+    }
+
 
 
 }

@@ -25,4 +25,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
             "where role.id = :id")
     List<User> findAllWithRoleId(Integer id);
 
+    @Query(value = "select user from User user where user.boats is not empty")
+    List<User> findAllWithRentedBoats();
 }

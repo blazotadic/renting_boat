@@ -1,10 +1,12 @@
 package com.renting_boat.demo.security.jwt;
 
+import com.renting_boat.demo.security.treds.LocalPrincipal;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -16,12 +18,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final LocalPrincipal localPrincipal;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -35,6 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
             {
                 Authentication authentication = jwtTokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication); //lokalni tredovi
+                //log.info((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+                localPrincipal.setPrincipal((String) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
             }
             filterChain.doFilter(request, response);    //nastavak lanca filtera
         }

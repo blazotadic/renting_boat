@@ -22,8 +22,19 @@ public class BoatSearchSpecification implements Specification<Boat> {
         priceLess(root, criteriaBuilder, predicates);
         priceGreater(root, criteriaBuilder, predicates);
         freeAfter(root, criteriaBuilder, predicates);
+        brandContain(root, criteriaBuilder, predicates);
+
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+    }
+
+    private void brandContain(Root<Boat> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates) {
+        if (boatSearch.getBrandContain() != null)
+        {
+            Predicate brandContain = criteriaBuilder.like(root.get("brand"),
+                    "%" + boatSearch.getBrandContain() + "%");
+            predicates.add(brandContain);
+        }
     }
 
     private void categoryContain(Root<Boat> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates) {

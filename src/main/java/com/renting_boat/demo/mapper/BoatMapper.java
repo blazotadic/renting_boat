@@ -2,6 +2,7 @@ package com.renting_boat.demo.mapper;
 
 
 import com.renting_boat.demo.dto.BoatDTO;
+import com.renting_boat.demo.dto.BoatWithUserDTO;
 import com.renting_boat.demo.entity.Boat;
 import org.mapstruct.Mapper;
 
@@ -10,4 +11,5 @@ public interface BoatMapper
 {
     Boat mapToEntity(BoatDTO boatDTO);
     BoatDTO mapToDTO(Boat boat);
+    BoatWithUserDTO mapToBoatWithUserDTO(Boat boat);
 }

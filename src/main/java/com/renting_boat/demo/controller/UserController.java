@@ -63,4 +63,12 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping(value = "admin/user/with-rented-boats")
+    public ResponseEntity<List<UserDTO>> usersWithRentedBoats()
+    {
+        List<UserDTO> users = userService.usersWithRentedBoats();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+
 }

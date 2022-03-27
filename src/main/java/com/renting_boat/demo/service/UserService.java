@@ -1,10 +1,12 @@
 package com.renting_boat.demo.service;
 
 import com.renting_boat.demo.dto.UserDTO;
+import com.renting_boat.demo.entity.Boat;
 import com.renting_boat.demo.entity.Role;
 import com.renting_boat.demo.entity.User;
 import com.renting_boat.demo.exception.CustomSqlException;
 import com.renting_boat.demo.mapper.UserMapper;
+import com.renting_boat.demo.repository.BoatRepository;
 import com.renting_boat.demo.repository.RoleRepository;
 import com.renting_boat.demo.repository.UserRepository;
 import com.renting_boat.demo.security.dto.UserCreateDTO;
@@ -124,5 +126,13 @@ public class UserService {
         }
         else{ throw new CustomSqlException("User doesn't exist");}
 
+    }
+
+
+    public List<UserDTO> usersWithRentedBoats() {
+        List<User> users = userRepository.findAllWithRentedBoats();
+        return users
+                .stream()
+                .map(userMapper::toDTO).collect(Collectors.toList());
     }
 }

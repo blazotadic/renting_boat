@@ -52,8 +52,10 @@ public class User {
     @ToString.Exclude // LAZY
     private List<Boat> boats = new ArrayList<>();
 
-    public void addRole(Role role) {
-        this.getRoles().add(role);
+    public void addRole(Role role) {this.getRoles().add(role);}
+
+    public void addBoat(Boat boat) {
+        this.getBoats().add(boat);
     }
 
     public void removeRole(Role role) {
@@ -62,7 +64,7 @@ public class User {
 
     public void removeByRoleId(int roleId)
     {
-        Set<Role> roles = this.getRoles(); // dodatan select jer je lazy
+        Set<Role> roles = this.getRoles();
         for (Role role : roles)
         {
             if (role.getId().equals(roleId))
