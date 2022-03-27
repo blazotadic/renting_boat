@@ -3,6 +3,7 @@ package com.renting_boat.demo.service;
 import com.renting_boat.demo.dto.UserDTO;
 import com.renting_boat.demo.entity.Role;
 import com.renting_boat.demo.entity.User;
+import com.renting_boat.demo.exception.CustomSqlException;
 import com.renting_boat.demo.mapper.UserMapper;
 import com.renting_boat.demo.repository.RoleRepository;
 import com.renting_boat.demo.repository.UserRepository;
@@ -77,5 +78,51 @@ public class UserService {
                     .stream()
                     .map(userMapper::toDTO).collect(Collectors.toList());
         }
+    }
+
+    public void addRole(Integer userId, Integer roleId) throws CustomSqlException
+    {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            Optional<Role> role = roleRepository.findById(roleId);
+            if(role.isPresent()){
+                User newUser = user.get();
+                newUser.addRole(role.get());
+                userRepository.save(newUser);
+            }
+            else{ throw new CustomSqlException("Role doesn't exist");}
+        }
+        else{ throw new CustomSqlException("User doesn't exist");}
+
+
+    }
+
+    public void removeRole(Integer userId, Integer roleId) throws CustomSqlException
+    {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            Optional<Role> role = roleRepository.findById(roleId);
+            if(role.isPresent()){
+                User newUser = user.get();
+                newUser.removeRole(role.get());
+                userRepository.save(newUser);
+            }
+            else{ throw new CustomSqlException("Role doesn't exist");}
+        }
+        else{ throw new CustomSqlException("User doesn't exist");}
+    }
+
+    public void deleteRole(Integer userId) throws CustomSqlException
+    {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            User newUser = user.get();
+            if(newUser.getBoats().isEmpty()){
+                userRepository.delete(newUser);
+            }
+            else{ throw new CustomSqlException("User doesn't delete, because he didn't return the renting boats");}
+        }
+        else{ throw new CustomSqlException("User doesn't exist");}
+
     }
 }

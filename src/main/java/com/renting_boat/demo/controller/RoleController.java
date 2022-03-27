@@ -18,7 +18,7 @@ public class RoleController {
     private final RoleService roleService;
 
     @PostMapping("add")
-    public ResponseEntity<Role> add(@RequestBody RoleDTO roleDTO)
+public ResponseEntity<Role> add(@RequestBody RoleDTO roleDTO)
     {
         if (roleDTO.getId() != null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
