@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="2403202215570000" author="blazo" context="dev">
+
+        <sql>
+            INSERT INTO user(first_name, last_name, username, password)
+            VALUES
+            ('Petar', 'Petrovic', 'PP@gmail.com', '12345678'),
+            ('Stefan', 'Stefanovic', 'SS@gmail.com', '12345678'),
+            ('Jovan', 'Jovanovic', 'JJ@gmail.com', '12345678'),
+            ('Lazar', 'Lazarevic', 'LL@gmail.com', '12345678');
+
+        </sql>
+
+
+
+
+    </changeSet>
+
+
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/renting_boat?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=CET&allowPublicKeyRetrieval=true
+    username: root # MySQL korisnicko ime
+    password: 124578 # MySQL lozinka
+    driver-class-name: com.mysql.jdbc.Driver # MySQL Driver -> MySQL 5.X.X
+    # driver-class-name: com.mysql.cj.jdbc.Driver # MySQL Driver -> MySQL 8.X.X
+  jpa:
+    show-sql: true # omogucava ispis upita u konzoli
+
+  liquibase:
+    contexts: dev
+
+
+server:
+  port: 8080  # difoltni
+
+
+auth-key: adminadmin

@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet id="2403202213530000" author="blazo" context="dev">
+
+        <sql>
+            INSERT INTO boat(category, price, brand)
+            VALUES
+            ('speed boat', 50 , 'yamaha'),
+            ('boat', 30, 'yamaha'),
+            ('jet ski', 130, 'sea doo'),
+            ('jet ski', 100, 'waverunner'),
+            ('boat', 30, 'yamaha')
+
+        </sql>
+
+
+
+
+    </changeSet>
+
+
+</databaseChangeLog>

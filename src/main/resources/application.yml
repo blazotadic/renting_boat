@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: Renting boat
+  profiles:
+    active: dev
+
+#  # Cache Configuration
+#  cache:
+#    jcache:
+#      config: classpath:ehcache.xml
+
+  # Liquibase Configuration
+  liquibase:
+    change-log: classpath:liquibase/master.xml
+
+db-url: test123
+
+jwt:
+  secret: cmVudGluZ19ib2F0  # kod u b64 formatu renting_boat
+  validityInMinutes: 30  # vrijeme trajanja tokena
