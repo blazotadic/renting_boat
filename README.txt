@@ -1,7 +1,7 @@
-U fajlu Database nalazi se kod sql baze podataka koju je potrebno pokrenuti, uz pomoc liquibase ce te tabele biti popunjene 
-osnovnim podacima(samo u dev modu) prilikom prvog pokretanje. Ostatak podataka u bazi ce se popunjavati testiranjem api servisa.
-Servisi koji pocilju sa http://localhost:8080/api/admin/ moze im pristupiti samo uz pomoc jwt tokena korisnik sa rolom admin.
-prvi admin se dodaje uz spomoc specijalnog kljuca(imate dolje taj api).
+U fajlu Database nalazi se kod sql baze podataka koju je potrebno pokrenuti, uz pomoc liquibase ce te tabele biti popunjene
+osnovnim podacima(samo u dev modu) prilikom prvog pokretanja. Ostatak podataka u bazi ce se popunjavati testiranjem api servisa.
+Servisi koji pocilju sa http://localhost:8080/api/admin/ moze im pristupiti samo korisnik sa rolom ROLE_ADMIN (jwt token).
+Prvi admin se dodaje uz pomoc specijalnog kljuca(imate dolje taj api).
 Trajanje jwt tokena 60min.
 
 
@@ -96,8 +96,8 @@ napomena: metoda baca custom exceptipn u slucaju da ne postoji korisnik ili da n
 //(admin) Svi korisnici
 (get) - http://localhost:8080/api/admin/user/all
 header: Authorization Bearer {adminov token}
-napomena: Sve sifre koje se mogu koristiti su sifrovane(orginalne sifre 12345678), 
-one koje nijesu sifrovane se ne mogu koristiti(jer se desifruju prije provjere) i tu su samo zbog kolicine podataka
+napomena: Svi password-i koje se mogu koristiti se sifruju prilikom registracije, 
+oni koji nijesu sifrovani se ne mogu koristiti(jer se desifruju prije provjere) i tu su samo zbog kolicine podataka
 ------------------------------
 
 //(admin) Svi korisnici sa odredjenom rolom
