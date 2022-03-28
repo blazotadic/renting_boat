@@ -49,10 +49,12 @@ public class User {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "user")
-    @ToString.Exclude // LAZY
+    @ToString.Exclude
     private List<Boat> boats = new ArrayList<>();
 
     public void addRole(Role role) {this.getRoles().add(role);}
+
+    public void removeAllRole(){this.roles = Collections.emptySet();}
 
     public void addBoat(Boat boat) {
         this.getBoats().add(boat);
@@ -62,14 +64,14 @@ public class User {
         this.getRoles().remove(role);
     }
 
-    public void removeByRoleId(int roleId)
+    public void removeBoatById(int boatId)
     {
-        Set<Role> roles = this.getRoles();
-        for (Role role : roles)
+        List<Boat> boats = this.getBoats();
+        for (Boat boat : boats)
         {
-            if (role.getId().equals(roleId))
+            if (boat.getId().equals(boatId))
             {
-                roles.remove(role);
+                boats.remove(boat);
                 break;
             }
         }

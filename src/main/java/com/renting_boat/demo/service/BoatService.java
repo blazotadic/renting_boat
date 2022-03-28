@@ -59,31 +59,34 @@ public class BoatService {
     }
 
 
-//    //@Transactional
-//    public void rentingBoat(RentingBoatDTO rentingBoatDTO) throws CustomSqlException
-//    {
-//        if(rentingBoatDTO.getBoatId() != null && rentingBoatDTO.getRentingUntil() !=null) {
-//            Optional<Boat> boat = boatRepository.findById(rentingBoatDTO.getBoatId());
-//            if (boat.isPresent()) {
-//                Boat newBoat = boat.get();
-//                if (newBoat.getRentingUntil() == null) {
-//                    newBoat.setRentingUntil(rentingBoatDTO.getRentingUntil());
-//                } else {
-//                    throw new CustomSqlException("Boat is busy");
-//                }
-//                Optional<User> user = Optional.ofNullable(userRepository.findByUsername(localPrincipal.getPrincipal()));
-//                if (user.isPresent()) {
-//                    User newUser = user.get();
-//                    newUser.addBoat(newBoat);
-//                    //transakcija sa bankom, ako je prodje sve se vraca na staro jer je transakciona metoda u pitanju
-//                } else {
-//                    throw new CustomSqlException("Error, try later");
-//                }
-//            } else {
-//                throw new CustomSqlException("Boat doesn't exist");
-//            }
-//        }
-//        else{ throw new CustomSqlException("boatId or rentingUntil is empty");}
-//    }
+    //@Transactional
+    public void rentingBoat(RentingBoatDTO rentingBoatDTO) throws CustomSqlException
+    {
+        if(rentingBoatDTO.getBoatId() != null && rentingBoatDTO.getRentingUntil() !=null) {
+            Optional<Boat> boat = boatRepository.findById(rentingBoatDTO.getBoatId());
+            if (boat.isPresent()) {
+                Boat newBoat = boat.get();
+                if (newBoat.getRentingUntil() == null && newBoat.getUser() == null) {
+                    newBoat.setRentingUntil(rentingBoatDTO.getRentingUntil());
+                    Optional<User> user = Optional.ofNullable(userRepository.findByUsername(localPrincipal.getPrincipal()));
+                    if (user.isPresent()) {
+                        User newUser = user.get();
+                        newUser.addBoat(newBoat);
+                        newBoat.setUser(newUser);
+
+                        //transakcija sa bankom, ako je prodje sve se vraca na staro jer je transakciona metoda u pitanju
+                    } else {
+                        throw new CustomSqlException("Error, try later");
+                    }
+                } else {
+                    throw new CustomSqlException("Boat is busy");
+                }
+
+            } else {
+                throw new CustomSqlException("Boat doesn't exist");
+            }
+        }
+        else{ throw new CustomSqlException("boatId or rentingUntil is empty");}
+    }
 
 }

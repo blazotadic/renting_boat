@@ -10,13 +10,16 @@ import com.renting_boat.demo.repository.BoatRepository;
 import com.renting_boat.demo.repository.RoleRepository;
 import com.renting_boat.demo.repository.UserRepository;
 import com.renting_boat.demo.security.dto.UserCreateDTO;
+import com.renting_boat.demo.security.treds.LocalPrincipal;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -26,6 +29,8 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
+    private final BoatRepository boatRepository;
+    private final LocalPrincipal localPrincipal;
 
 
     public List<UserDTO> all()
@@ -114,12 +119,13 @@ public class UserService {
         else{ throw new CustomSqlException("User doesn't exist");}
     }
 
-    public void deleteRole(Integer userId) throws CustomSqlException
+    public void deleteUser(Integer userId) throws CustomSqlException
     {
         Optional<User> user = userRepository.findById(userId);
         if(user.isPresent()){
             User newUser = user.get();
             if(newUser.getBoats().isEmpty()){
+                newUser.removeAllRole();
                 userRepository.delete(newUser);
             }
             else{ throw new CustomSqlException("User doesn't delete, because he didn't return the renting boats");}
@@ -134,5 +140,34 @@ public class UserService {
         return users
                 .stream()
                 .map(userMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public void deleteYourself() throws CustomSqlException
+    {
+        Optional<User> user = Optional.ofNullable(userRepository.findByUsername(localPrincipal.getPrincipal()));
+        if(user.isPresent()){
+            User newUser = user.get();
+            if(newUser.getBoats().isEmpty()){
+                newUser.removeAllRole();
+                userRepository.deleteById(newUser.getId());
+            }
+            else{ throw new CustomSqlException("User doesn't delete, because he didn't return the renting boats");}
+        }
+        else{ throw new CustomSqlException("User doesn't exist");}
+    }
+
+    public void removeRentedBoat(Integer userId, Integer boatId) throws CustomSqlException
+    {
+        Optional<User> user = userRepository.findById(userId);
+        if(user.isPresent()){
+            Optional<Boat> boat = boatRepository.findById(boatId);
+            if(boat.isPresent()){
+                Boat newBoat = boat.get();
+                newBoat.removeUserAndRentingUntil();
+                boatRepository.save(newBoat);
+            }
+            else{ throw new CustomSqlException("Boat doesn't exist");}
+        }
+        else{ throw new CustomSqlException("User doesn't exist");}
     }
 }

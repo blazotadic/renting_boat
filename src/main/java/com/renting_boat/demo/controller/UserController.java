@@ -59,7 +59,22 @@ public class UserController {
     @DeleteMapping(value = "admin/user/delete/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer userId)throws CustomSqlException
     {
-        userService.deleteRole(userId);
+        userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "user/delete-yourself")
+    public ResponseEntity<Void> deleteYourself()throws CustomSqlException
+    {
+        userService.deleteYourself();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping(value = "admin/user/remove-rented-boat/{userId}/{boatId}")
+    public ResponseEntity<Void> removeRentedBoat(@PathVariable Integer userId,
+                                                 @PathVariable Integer boatId) throws CustomSqlException
+    {
+        userService.removeRentedBoat(userId, boatId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

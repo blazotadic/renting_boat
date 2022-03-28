@@ -1,6 +1,7 @@
 package com.renting_boat.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class Boat implements Serializable {
     private String brand;
 
     @Temporal(value = TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy/MM/dd")
     @Column(name = "renting_until")
     private Date rentingUntil;
 
@@ -45,4 +47,10 @@ public class Boat implements Serializable {
     @JoinColumn(name = "user_id")
     @ToString.Exclude
     private User user;
+
+    public void removeUserAndRentingUntil()
+    {
+        this.user = null;
+        this.rentingUntil = null;
+    }
 }

@@ -53,12 +53,6 @@ public class BoatController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping(value = "boat/renting")
-    public ResponseEntity<Void> rentingBoat(@RequestBody RentingBoatDTO rentingBoatDTO) //throws CustomSqlException
-    {
-        //boatService.rentingBoat(rentingBoatDTO);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @GetMapping(value = "admin/boat/rented")
     public ResponseEntity<List<Boat>> rentedBoat()
@@ -68,5 +62,9 @@ public class BoatController {
     }
 
 
-
+    @PostMapping(value = "boat/renting")
+    public ResponseEntity<Void> rentingBoat(@RequestBody RentingBoatDTO rentingBoatDTO) throws CustomSqlException {
+        boatService.rentingBoat(rentingBoatDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
