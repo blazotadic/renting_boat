@@ -26,19 +26,13 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value = "admin/user/all-admins")
-    public ResponseEntity<List<UserDTO>> allAdmins()
+    @GetMapping(value = "admin/user/with-role/{roleId}")
+    public ResponseEntity<List<UserDTO>> allAdmins(@PathVariable Integer roleId)
     {
-        List<UserDTO> users = userService.allAdmins();
+        List<UserDTO> users = userService.allWithRole(roleId);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping(value = "admin/user/all-users")
-    public ResponseEntity<List<UserDTO>> allUsers()
-    {
-        List<UserDTO> users = userService.allUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
-    }
 
     @GetMapping(value = "admin/user/add-role/{userId}")
     public ResponseEntity<Void> addRole(@PathVariable Integer userId,

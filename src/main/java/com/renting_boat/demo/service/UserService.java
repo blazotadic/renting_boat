@@ -69,23 +69,15 @@ public class UserService {
             userRepository.save(user);
         }
 
-    public List<UserDTO> allAdmins() {
+    public List<UserDTO> allWithRole(Integer roleId) {
         {
-            List<User> users = userRepository.findAllWithRoleId(2);
+            List<User> users = userRepository.findAllWithRoleId(roleId);
             return users
                     .stream()
                     .map(userMapper::toDTO).collect(Collectors.toList());
         }
     }
 
-    public List<UserDTO> allUsers() {
-        {
-            List<User> users = userRepository.findAllWithRoleId(1);
-            return users
-                    .stream()
-                    .map(userMapper::toDTO).collect(Collectors.toList());
-        }
-    }
 
     public void addRole(Integer userId, Integer roleId) throws CustomSqlException
     {
