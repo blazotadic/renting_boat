@@ -8,6 +8,8 @@ import com.renting_boat.demo.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +26,16 @@ public class RoleService {
     }
 
     public void delete(Integer id)throws CustomSqlException {
-        if(id>2) {
-            roleRepository.deleteById(id);
+        Optional<Role> role = roleRepository.findById(id);
+        if(role.isPresent()) {
+            if (id > 2) {
+                roleRepository.deleteById(id);
+            } else {
+                throw new CustomSqlException("You can't delete role with id=1 or id=2");
+            }
         }
         else {
-            throw new CustomSqlException("You can't delete role with id=1 or id=2");
+            throw new CustomSqlException("This role doesn't exist");
         }
     }
 }

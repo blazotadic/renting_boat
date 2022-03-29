@@ -49,8 +49,12 @@ public class BoatService {
         boatRepository.save(boat);
     }
 
-    public void delete(Integer id) {
-        boatRepository.deleteById(id);
+    public void delete(Integer id) throws CustomSqlException {
+        Optional<Boat> boat = boatRepository.findById(id);
+        if(boat.isPresent()) {
+            boatRepository.deleteById(id);
+        }
+        else {throw new CustomSqlException("Boat doesn't exist");}
     }
 
     public List<Boat> rentedBoat()

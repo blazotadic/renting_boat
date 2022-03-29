@@ -53,6 +53,7 @@ body:
 //(admin) Brisanje oglasa
 (delete) - http://localhost:8080/api/admin/boat/delete/{id}
 header: Authorization Bearer {adminov token}
+napomena: Provjerava se da li postoji taj oglas
 -----------------------------
 
 //(admin) Dodavanje role
@@ -71,6 +72,7 @@ header: Authorization Bearer {adminov token}
 napomena: U slucaju da se pokusa obrisati rola sa id-jem 1 ili 2(jer su to dvije glavne role koje se koriste za security), 
 izaci ce custom exception koji nasledjuje exception(ne run time exception). 
 Nece prekinuti program jer imam klasu za obradjuvanje tog exception-a i izaci se custom poruka.
+Provjerava se i da li postoji ta rola.
 ------------------------------
 
 //(admin) Dodavanje role korisniku(admin moze da doda admina)

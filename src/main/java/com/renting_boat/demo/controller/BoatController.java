@@ -47,7 +47,7 @@ public class BoatController {
     }
 
     @DeleteMapping("admin/boat/delete/{id}")
-    public ResponseEntity<Role> delete(@PathVariable Integer id)
+    public ResponseEntity<Role> delete(@PathVariable Integer id)throws CustomSqlException
     {
         boatService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
