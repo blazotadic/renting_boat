@@ -64,6 +64,7 @@ body: RoleDTO
     "name": "ROLE_DEVELOPER",
     "description": "Description..." 
 }
+napomena: Provjerava se da li je popunjeno i ime i deskripcija
 ------------------------------
 
 //(admin) Brisanje role

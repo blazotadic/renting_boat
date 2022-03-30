@@ -19,10 +19,14 @@ public class RoleService {
     private final RoleMapper roleMapper;
 
 
-    public Role save(RoleDTO roleDTO)
-    {
-        Role role = roleMapper.toEntity(roleDTO);
-        return roleRepository.save(role);
+    public Role save(RoleDTO roleDTO)throws CustomSqlException {
+        if (roleDTO.getName() != null && roleDTO.getDescription() != null) {
+            Role role = roleMapper.toEntity(roleDTO);
+            return roleRepository.save(role);
+        }
+        else {
+            throw new CustomSqlException("You must have name and description");
+        }
     }
 
     public void delete(Integer id)throws CustomSqlException {
