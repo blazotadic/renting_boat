@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -66,5 +67,19 @@ public class BoatController {
     public ResponseEntity<Void> rentingBoat(@RequestBody RentingBoatDTO rentingBoatDTO) throws CustomSqlException {
         boatService.rentingBoat(rentingBoatDTO);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "boat/getAllCategories")
+    public ResponseEntity<Set<String>> getAllCategory()
+    {
+        Set<String> AllCategory = boatService.getAllCategories();
+        return new ResponseEntity<>(AllCategory, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "boat/getAllBrands")
+    public ResponseEntity<Set<String>> getAllBrands()
+    {
+        Set<String> AllBrands = boatService.getAllBrands();
+        return new ResponseEntity<>(AllBrands, HttpStatus.OK);
     }
 }

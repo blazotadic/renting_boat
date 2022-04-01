@@ -122,7 +122,7 @@ body:
     "boatId": 1,
     "rentingUntil": "2022/10/15",
     "cardNumber": "0000000000000000",
-    "CardholderName": "makro Markovic",
+    "CardholderName": "marko Markovic",
     "MM_YY": "05/21",
     "cvv": "123"
 }
@@ -143,6 +143,16 @@ header: Authorization Bearer {adminov token}
 (put) - http://localhost:8080/api/admin/user/remove-rented-boat/{userId}/{boatId}
 header: Authorization Bearer {adminov token}
 napomena: provjereva se postojanje i korisnika i plovila
+-----------------------------
+
+//(svi prijavljeni) Svi brendovi plovila koje imamo(zbog pretrezivanja)
+(get) - http://localhost:8080/api/boat/getAllBrands
+header: Authorization Bearer {token}
+-----------------------------
+
+//(svi prijavljeni) Sve kategorije plovila koje imamo(zbog pretrezivanja)
+(get) - http://localhost:8080/api/boat/getAllCategories
+header: Authorization Bearer {token}
 -----------------------------
 
 //(svi prijavljeni) pretraga po vise opcionih parametara

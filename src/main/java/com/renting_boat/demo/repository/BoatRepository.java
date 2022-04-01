@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface BoatRepository extends JpaRepository<Boat, Integer>, JpaSpecificationExecutor<Boat>
@@ -15,4 +16,10 @@ public interface BoatRepository extends JpaRepository<Boat, Integer>, JpaSpecifi
             "left join fetch boat.user " +
             "where boat.rentingUntil is not null")
     List<Boat> findAllRentedBoats();
+
+    @Query(value = "select boat.category from Boat boat")
+    Set<String> getAllCategories();
+
+    @Query(value = "select boat.brand from Boat boat")
+    Set<String> getAllBrands();
 }

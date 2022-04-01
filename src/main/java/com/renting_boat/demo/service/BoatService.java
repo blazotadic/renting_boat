@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -93,4 +94,11 @@ public class BoatService {
         else{ throw new CustomSqlException("boatId or rentingUntil is empty");}
     }
 
+    public Set<String> getAllCategories() {
+        return boatRepository.getAllCategories();
+    }
+
+    public Set<String> getAllBrands() {
+        return boatRepository.getAllBrands();
+    }
 }
