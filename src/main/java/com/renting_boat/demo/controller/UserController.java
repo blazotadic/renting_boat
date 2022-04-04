@@ -1,14 +1,15 @@
 package com.renting_boat.demo.controller;
 
-import com.renting_boat.demo.dto.RoleDTO;
 import com.renting_boat.demo.dto.UserDTO;
 import com.renting_boat.demo.exception.CustomSqlException;
 import com.renting_boat.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -77,6 +78,13 @@ public class UserController {
     {
         List<UserDTO> users = userService.usersWithRentedBoats();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "user/does-it-exist-username/{username}")
+    public ResponseEntity<HashMap<String, Boolean>> doesExist(@PathVariable String username)
+    {
+        HashMap<String, Boolean> doesExist = userService.doesExist(username);
+        return new ResponseEntity<>(doesExist, HttpStatus.OK);
     }
 
 

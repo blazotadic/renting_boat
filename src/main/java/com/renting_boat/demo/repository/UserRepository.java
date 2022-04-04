@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -27,4 +28,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 
     @Query(value = "select user from User user where user.boats is not empty")
     List<User> findAllWithRentedBoats();
+
+    @Query(value = "select user from User user where user.username = :username")
+    Optional<User> doesItExistUsername(String username);
 }

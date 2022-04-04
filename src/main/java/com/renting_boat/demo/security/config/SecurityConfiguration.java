@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //necemo cuvati podatke u sesiji nego jason veb token
             .and()
             .authorizeRequests()    //autorizovani zahtjrvi su sledeci
+            .antMatchers("/api/user/does-it-exist-username/**").permitAll()
             .antMatchers("/api/authenticate/**").permitAll()
             .antMatchers("/api/admin/**").hasRole("ADMIN")
             .antMatchers("/api/**").authenticated()

@@ -162,4 +162,16 @@ public class UserService {
         }
         else{ throw new CustomSqlException("User doesn't exist");}
     }
+
+    public HashMap<String, Boolean> doesExist(String username) {
+        HashMap<String, Boolean> doesExist = new HashMap<String, Boolean>();
+        if(userRepository.doesItExistUsername(username).isPresent()){
+            doesExist.put("doesExist", true);
+        }
+        else{
+            doesExist.put("doesExist", false);
+        }
+        return doesExist;
+
+    }
 }

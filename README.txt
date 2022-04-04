@@ -17,7 +17,7 @@ body: UserCreateDTO
 napomena: Radi se validacija podataka
 --------------------------------
 
-//Registracija admina
+//(svi) Registracija admina
 (post) - http://localhost:8080/api/authenticate/register-admin
 header:	Authorization adminadmin (adminadmin je sifra za dodavanje prvog admina)	
 body: UserCreateDTO 
@@ -28,6 +28,11 @@ body: UserCreateDTO
     "password": "12345678"
 }
 napomena: Radi se validacija podataka
+-------------------------------
+
+//(svi) Provjerava da li je vec zauzet taj username, i vraca mapu String Boolean
+(get) - http://localhost:8080/api/user/does-it-exist-username/{username}
+
 -------------------------------
 
 //(svi) Login
