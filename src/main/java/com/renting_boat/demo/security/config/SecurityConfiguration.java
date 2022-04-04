@@ -34,12 +34,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     {
         auth
             .userDetailsService(userDetailsService)     //za provjeru dobijenih podataka
-            .passwordEncoder(passwordEncoder());        //uz pomoc ovog algoritma dekodiramo pasvort iz baze
+            .passwordEncoder(passwordEncoder());        //uz pomoc ovog algoritma dekodiramo password iz baze
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS);
+        web.ignoring().antMatchers(HttpMethod.OPTIONS);     //da bi Angular mogao da poziva servise
     }
 
     @Override

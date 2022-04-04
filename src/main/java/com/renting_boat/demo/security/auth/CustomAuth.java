@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class CustomAuth {
 
 
-    @Value("${auth-key}")
+    @Value("${authKey}")
     private String authKey;
 
     public boolean hasPermissionBasedOnSomething(String providedKey)

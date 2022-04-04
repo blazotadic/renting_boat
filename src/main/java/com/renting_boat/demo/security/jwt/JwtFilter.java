@@ -24,7 +24,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final LocalPrincipal localPrincipal;
+    private final LocalPrincipal localPrincipal;    //dodao sam ovo da bih pristupio korisniku preko JWT tokena
 
 
     @Override

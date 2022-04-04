@@ -1,5 +1,6 @@
 package com.renting_boat.demo.security.controller;
 
+import com.renting_boat.demo.exception.CustomSqlException;
 import com.renting_boat.demo.security.exception.ValidationException;
 import com.renting_boat.demo.security.dto.UserCreateDTO;
 import com.renting_boat.demo.security.dto.UserLoginDTO;
@@ -68,7 +69,7 @@ public class AuthController {
     }
     @PreAuthorize("@customAuth.hasPermissionBasedOnSomething(#authKey)")
     @PostMapping(value = "register-admin")
-    public ResponseEntity<Void> registerAdmin(@RequestHeader(value = "Authorization") String authKey, @RequestBody UserCreateDTO userCreateDTO) throws ValidationException
+    public ResponseEntity<Void> registerAdmin(@RequestHeader(value = "Authorization") String authKey, @RequestBody UserCreateDTO userCreateDTO) throws ValidationException, CustomSqlException
     {
         Errors errors = new BeanPropertyBindingResult(userCreateDTO, "userCreateDTO");
         ValidationUtils.invokeValidator(userCreateValidator, userCreateDTO, errors);
@@ -77,7 +78,7 @@ public class AuthController {
             throw new ValidationException("Register user validation failed!", errors);
         }
 
-        userService.registerAdmin(userCreateDTO);
+        userService.registerAdmin(userCreateDTO, authKey);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

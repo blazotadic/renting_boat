@@ -10,9 +10,11 @@ import com.renting_boat.demo.repository.BoatRepository;
 import com.renting_boat.demo.repository.RoleRepository;
 import com.renting_boat.demo.repository.UserRepository;
 import com.renting_boat.demo.security.dto.UserCreateDTO;
+import com.renting_boat.demo.security.exception.ValidationException;
 import com.renting_boat.demo.security.treds.LocalPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -24,6 +26,9 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
+
+    @Value("${authKey}")
+    private String authKey;
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -55,18 +60,22 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void registerAdmin(UserCreateDTO userCreateDTO)
+    public void registerAdmin(UserCreateDTO userCreateDTO, String myAuthKey)throws CustomSqlException
         {
-            String encodedPassword = passwordEncoder.encode(userCreateDTO.getPassword());
+            log.info(authKey, myAuthKey);
+            if(authKey.equals(myAuthKey)) {
+                String encodedPassword = passwordEncoder.encode(userCreateDTO.getPassword());
 
-            User user = userMapper.toEntity(userCreateDTO);
-            user.setPassword(encodedPassword);
-            Optional<Role> role = roleRepository.findById(2);
-            if (role.isPresent()) {
-                user.addRole(role.get());
+                User user = userMapper.toEntity(userCreateDTO);
+                user.setPassword(encodedPassword);
+                Optional<Role> role = roleRepository.findById(2);
+                if (role.isPresent()) {
+                    user.addRole(role.get());
+                }
+
+                userRepository.save(user);
             }
-
-            userRepository.save(user);
+            else{ throw new CustomSqlException("Admin key is not valid"); }
         }
 
     public List<UserDTO> allWithRole(Integer roleId) {

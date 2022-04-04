@@ -15,5 +15,3 @@ spring:
 server:
   port: 8080  # difoltni
 
-
-auth-key: adminadmin
