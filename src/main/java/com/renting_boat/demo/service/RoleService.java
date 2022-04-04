@@ -32,14 +32,15 @@ public class RoleService {
     public void delete(Integer id)throws CustomSqlException {
         Optional<Role> role = roleRepository.findById(id);
         if(role.isPresent()) {
+            Role newRole = role.get();
             if (id > 2) {
-                roleRepository.deleteById(id);
-            } else {
-                throw new CustomSqlException("You can't delete role with id=1 or id=2");
+                if(newRole.getUsers().isEmpty()) {
+                    roleRepository.deleteById(id);
+                }
+                else { throw new CustomSqlException("That role is assigned to the user"); }
             }
+            else { throw new CustomSqlException("You can't delete role with id=1 or id=2"); }
         }
-        else {
-            throw new CustomSqlException("This role doesn't exist");
-        }
+        else { throw new CustomSqlException("This role doesn't exist"); }
     }
 }
